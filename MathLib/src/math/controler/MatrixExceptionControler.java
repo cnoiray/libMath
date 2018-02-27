@@ -9,8 +9,8 @@ import math.controler.exception.LinearEquationException;
 import math.controler.exception.PropertyValueErrorException;
 import math.controler.exception.SquareMatriceErrorException;
 import math.controler.exception.TriangularMatriceErrorException;
-import math.entities.MathObject;
-import math.entities.Matrice;
+import math.entities.mathobject.MathObject;
+import math.entities.mathobject.Matrice;
 
 public class MatrixExceptionControler {
 	/**

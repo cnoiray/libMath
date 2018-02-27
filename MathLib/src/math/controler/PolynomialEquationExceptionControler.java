@@ -2,9 +2,9 @@ package math.controler;
 
 import math.controler.exception.DivisionByZeroException;
 import math.controler.exception.PolynomialEquationException;
-import math.entities.MathObject;
-import math.entities.Polynome;
-import math.entities.Reel;
+import math.entities.mathobject.MathObject;
+import math.entities.mathobject.Polynome;
+import math.entities.mathobject.Reel;
 
 public class PolynomialEquationExceptionControler {
 	

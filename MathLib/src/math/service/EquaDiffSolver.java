@@ -12,19 +12,27 @@ public class EquaDiffSolver {
 		Reel deux = new Reel(2);
 		Reel six = new Reel(6);
 		
+		//y' = f(t, y)
+		//y(t0) = y0
+		
         for (int n = 0; n < t.length - 1; n++) {
-        	MathObject dy1 = Operation.multiplier(dt, function.apply(t[n], y[n]));
-        	MathObject dy2 = Operation.multiplier(dt, function.apply(
+        	//k1 = dt * f(tk, yk)
+        	MathObject k1 = Operation.multiplier(dt, function.apply(t[n], y[n]));
+        	//k2 = dt * f(tk + dt/2, yk+ dt/2 * k1)
+        	MathObject k2 = Operation.multiplier(dt, function.apply(
         			Operation.additionner(t[n], Operation.diviser(dt, deux)), 
-        			Operation.additionner(y[n], Operation.diviser(dy1, deux))));
-        	MathObject dy3 = Operation.multiplier(dt, function.apply(
+        			Operation.additionner(y[n], Operation.diviser(k1, deux))));
+        	//k3 = dt * f(tk + dt/2, yk+ dt/2 * k2)
+        	MathObject k3 = Operation.multiplier(dt, function.apply(
         			Operation.additionner(t[n], Operation.diviser(dt, deux)), 
-        			Operation.additionner(y[n], Operation.diviser(dy2, deux))));
-        	MathObject dy4 = Operation.multiplier(dt, function.apply(
+        			Operation.additionner(y[n], Operation.diviser(k2, deux))));
+        	//k4 = dt * f(tk + dt, yk + dt * k3)
+        	MathObject k4 = Operation.multiplier(dt, function.apply(
         			Operation.additionner(t[n], dt), 
-        			Operation.additionner(y[n], dy3)));
+        			Operation.additionner(y[n], k3)));
             t[n + 1] = Operation.additionner(t[n], dt);
-            y[n + 1] = Operation.additionner(y[n], Operation.diviser(Operation.additionner(dy1, Operation.additionner(Operation.multiplier(deux, Operation.additionner(dy2, dy3)), dy4)), six));
+            //y(n+1) = yn + (k1 + 2k2 + 2k3 + k4) / 6
+            y[n + 1] = Operation.additionner(y[n], Operation.diviser(Operation.additionner(k1, Operation.additionner(Operation.multiplier(deux, Operation.additionner(k2, k3)), k4)), six));
         }
     }
 }

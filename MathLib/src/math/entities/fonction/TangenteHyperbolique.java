@@ -2,9 +2,9 @@ package math.entities.fonction;
 
 import java.lang.reflect.InvocationTargetException;
 
-import math.entities.BinaryOperation;
-import math.entities.Fonction;
-import math.entities.MathObject;
+import math.entities.mathobject.BinaryOperation;
+import math.entities.mathobject.Fonction;
+import math.entities.mathobject.MathObject;
 
 public class TangenteHyperbolique extends Fonction{
 	public TangenteHyperbolique() {

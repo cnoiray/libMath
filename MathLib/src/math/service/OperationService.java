@@ -7,12 +7,12 @@ import java.util.List;
 import math.controler.MatrixExceptionControler;
 import math.controler.Operation;
 import math.controler.exception.DimensionErrorException;
-import math.entities.BinaryOperation;
-import math.entities.Complexe;
-import math.entities.MathObject;
-import math.entities.Matrice;
-import math.entities.Polynome;
-import math.entities.Reel;
+import math.entities.mathobject.BinaryOperation;
+import math.entities.mathobject.Complexe;
+import math.entities.mathobject.MathObject;
+import math.entities.mathobject.Matrice;
+import math.entities.mathobject.Polynome;
+import math.entities.mathobject.Reel;
 
 public class OperationService {
 	//------- ADDITION -------//
