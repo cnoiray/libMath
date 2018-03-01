@@ -5,8 +5,11 @@ package math.entities.mathobject;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Map;
+import java.util.AbstractMap.SimpleEntry;
 
 import math.controler.Operation;
+import math.entities.fonction.Puissance2;
 
 public class BinaryOperation extends MathObject {
 
@@ -104,7 +107,7 @@ public class BinaryOperation extends MathObject {
 	}
 
 	@Override
-	public MathObject calc(IMathObject val) {
+	public MathObject calc(SimpleEntry<Inconnue, IMathObject>... val) {
 		String operationName ="";
 		
 		switch (this.operand) {
@@ -150,7 +153,7 @@ public class BinaryOperation extends MathObject {
 					Operation.soustraire(
 						Operation.multiplier(operateur1.deriver(), operateur2),
 						Operation.multiplier(operateur1, operateur2.deriver())),
-					Operation.pow(operateur2, new Reel(2)));
+					new Puissance2(operateur2).calc());
 		}
 		return new Reel();
 	}

@@ -141,7 +141,7 @@ public class ComplexCourbe {
 			
 			MainService service = new MainService();
 			
-			List<Coordonnee> coordonnee = service.draw(service.analyse(fonction.get(i)), 0, 3, 20);
+			List<Coordonnee> coordonnee = service.draw(service.analyse(fonction.get(i)), 0f, 3f, 20f);
 			
 			for (Coordonnee coordonnee2 : coordonnee) {
 				courbe.add(coordonnee2.x,coordonnee2.y);

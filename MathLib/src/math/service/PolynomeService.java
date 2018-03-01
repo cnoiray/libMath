@@ -6,6 +6,8 @@ import java.util.List;
 
 import math.configuration.MathConf;
 import math.controler.Operation;
+import math.entities.fonction.Puissance2;
+import math.entities.fonction.Racine;
 import math.entities.mathobject.MathObject;
 import math.entities.mathobject.Polynome;
 import math.entities.mathobject.Reel;
@@ -69,14 +71,14 @@ public class PolynomeService {
 			PolynomialEquationExceptionControler.controleNbrDegres(polynome, 2);
 			
 			discriminant = Operation.soustraire(
-					Operation.pow(b, new Reel(2))
+					new Puissance2(b).eval()
 					,Operation.multiplier(Operation.multiplier(new Reel(4), a), c));
 			
 			PolynomialEquationExceptionControler.controleDiscriminant(discriminant);
 			
 			if(discriminant.sup(new Reel(0))){
-				MathObject x = Operation.diviser(Operation.soustraire(Operation.sqrt(discriminant), b), Operation.multiplier(new Reel(2), a));
-				MathObject y = Operation.diviser(Operation.soustraire(Operation.multiplier(new Reel(-1), Operation.sqrt(discriminant)), b), Operation.multiplier(new Reel(2), a));
+				MathObject x = Operation.diviser(Operation.soustraire(new Racine(discriminant).eval(), b), Operation.multiplier(new Reel(2), a));
+				MathObject y = Operation.diviser(Operation.soustraire(Operation.multiplier(new Reel(-1), new Racine(discriminant).eval()), b), Operation.multiplier(new Reel(2), a));
 				
 				resultat.add(x);
 				resultat.add(y);

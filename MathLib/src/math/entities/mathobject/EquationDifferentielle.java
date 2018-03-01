@@ -3,6 +3,8 @@ package math.entities.mathobject;
 import java.lang.reflect.InvocationTargetException;
 
 import math.controler.Operation;
+import math.entities.fonction.Puissance2;
+import math.entities.fonction.Racine;
 import math.entities.mathobject.fonction.Exponentiel;
 
 /**
@@ -49,12 +51,12 @@ public class EquationDifferentielle {
 		//equation caracteristique ax²+bx+c=0
 		//calcul du discriminant et distinction 3 cas
 		MathObject discriminant = Operation.soustraire(
-				Operation.pow(b, new Reel(2))
+				new Puissance2(b).eval()
 				,Operation.multiplier(Operation.multiplier(new Reel(4), a), c));
 		
 		if(discriminant.sup(new Reel(0))){
-			MathObject x = Operation.diviser(Operation.soustraire(Operation.sqrt(discriminant), b), Operation.multiplier(new Reel(2), a));
-			MathObject y = Operation.diviser(Operation.soustraire(Operation.multiplier(new Reel(-1), Operation.sqrt(discriminant)), b), Operation.multiplier(new Reel(2), a));
+			MathObject x = Operation.diviser(Operation.soustraire(new Racine(discriminant).eval(), b), Operation.multiplier(new Reel(2), a));
+			MathObject y = Operation.diviser(Operation.soustraire(Operation.multiplier(new Reel(-1), new Racine(discriminant).eval()), b), Operation.multiplier(new Reel(2), a));
 			
 			MathObject f1 = new Exponentiel(new BinaryOperation("*", x, new Inconnue()));
 			MathObject f2 = new Exponentiel(new BinaryOperation("*", y, new Inconnue()));

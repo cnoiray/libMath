@@ -1,10 +1,11 @@
 package math.entities.mathobject;
 
-import java.lang.reflect.InvocationTargetException;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.List;
 
 import math.controler.Operation;
+import math.entities.fonction.PuissanceN;
 import math.fonction.analyse.semantique.FonctionParser.Reel_opContext;
 import math.service.operation.Multiplication;
 
@@ -17,6 +18,8 @@ public class Polynome extends MathObject{
 	public List< List<MathObject>> formeFactorisee = new ArrayList<List<MathObject>>();
 	
 	private static Multiplication multiplicationService = new Multiplication();
+	
+	private Inconnue x = new Inconnue("x");
 	
 	public Polynome() {}
 	
@@ -80,11 +83,6 @@ public class Polynome extends MathObject{
 	 * 
 	 * @param List< List<Float>> formeFactorisee
 	 * @return Polynome polynome
-	 * @throws InvocationTargetException 
-	 * @throws IllegalArgumentException 
-	 * @throws IllegalAccessException 
-	 * @throws SecurityException 
-	 * @throws NoSuchMethodException 
 	 */
 	public Polynome buildPolynomeFromFactoriseForm(List< List<MathObject>> formeFactorisee){
 		this.formeDeveloppee = developperNaif(formeFactorisee);
@@ -98,11 +96,6 @@ public class Polynome extends MathObject{
 	 * 
 	 * @param List<List<Float>> formeFactorisee
 	 * @return List<Float> forme developpée
-	 * @throws InvocationTargetException 
-	 * @throws IllegalArgumentException 
-	 * @throws IllegalAccessException 
-	 * @throws SecurityException 
-	 * @throws NoSuchMethodException 
 	 */
 	private List<MathObject> developperNaif(List<List<MathObject>> formeFactorisee){
 		List<MathObject> formeDeveloppee = new ArrayList<MathObject>();
@@ -144,7 +137,6 @@ public class Polynome extends MathObject{
 	/**
 	 * Récupération de la constante
 	 * 
-	 * @param polynome
 	 * @return constante
 	 */
 	public MathObject getConstant(){
@@ -154,7 +146,6 @@ public class Polynome extends MathObject{
 	/**
 	 * Permet de determiner sur le polynome est nul
 	 * 
-	 * @param polynome
 	 * @return
 	 */
 	public boolean isNull(){
@@ -164,7 +155,6 @@ public class Polynome extends MathObject{
 	/**
 	 * Permet de determiner si le polynome est égal à un float
 	 * 
-	 * @param polynome
 	 * @param value
 	 * @return
 	 */
@@ -175,7 +165,6 @@ public class Polynome extends MathObject{
 	/**
 	 * Permet de determiner si deux polynomes sont égaux
 	 * 
-	 * @param polynome
 	 * @param polynome
 	 * @return
 	 */
@@ -203,7 +192,6 @@ public class Polynome extends MathObject{
 	/**
 	 * Méthode retournant le degrès d'un polynome
 	 * 
-	 * @param Polynome polynome
 	 * @return int degrès
 	 */
 	public int getDegres(){
@@ -228,8 +216,6 @@ public class Polynome extends MathObject{
 	
 	/**
 	 * Méthode d'affichage d'une fonction polynomiale
-	 * 
-	 * @param Polynome polynome
 	 */
 	public void afficher(){
 		afficherDeveloppeForm();
@@ -239,8 +225,6 @@ public class Polynome extends MathObject{
 	
 	/**
 	 * Méthode d'affichage de la forme developpée d'une fonction polynomiale
-	 * 
-	 * @param Polynome polynome
 	 */
 	public void afficherDeveloppeForm(){
 		System.out.println("Forme developpée: ");
@@ -250,8 +234,6 @@ public class Polynome extends MathObject{
 	
 	/**
 	 * Méthode d'affichage de la forme factorisée d'une fonction polynomiale
-	 * 
-	 * @param Polynome polynome
 	 */
 	public void afficherFactoriseForm(){
 		int i;
@@ -302,13 +284,7 @@ public class Polynome extends MathObject{
 	/**
 	 * Méthode de dérivation d'une fonction polynomiale
 	 * 
-	 * @param PolynomialEquation polynome
 	 * @return PolynomialEquation dérivée
-	 * @throws InvocationTargetException 
-	 * @throws IllegalArgumentException 
-	 * @throws IllegalAccessException 
-	 * @throws SecurityException 
-	 * @throws NoSuchMethodException 
 	 */
 	public Polynome deriver(){
 		List<MathObject> formeDeveloppee = new ArrayList<MathObject>();
@@ -322,14 +298,8 @@ public class Polynome extends MathObject{
 	/**
 	 * Méthode de dérivation n ième d'une fonction 
 	 * 
-	 * @param polynome PolynomialEquation
 	 * @param degres int
 	 * @return PolynomialEquation dérivée nième
-	 * @throws InvocationTargetException 
-	 * @throws IllegalArgumentException 
-	 * @throws IllegalAccessException 
-	 * @throws SecurityException 
-	 * @throws NoSuchMethodException 
 	 */
 	public Polynome calculDeriveeN(int degres){
 		List<MathObject> formeDeveloppee = new ArrayList<MathObject>();
@@ -347,21 +317,30 @@ public class Polynome extends MathObject{
 	/**
 	 * Methode de calcul de la valeur du polynome
 	 * 
-	 * @param Polynome polynome
 	 * @param valeur x
 	 * @return float result
-	 * @throws InvocationTargetException 
-	 * @throws IllegalArgumentException 
-	 * @throws IllegalAccessException 
-	 * @throws SecurityException 
-	 * @throws NoSuchMethodException 
 	 */
 	@Override
-	public MathObject calc(IMathObject val) {
+	public MathObject calc(SimpleEntry<Inconnue, IMathObject>... val) {
 		MathObject resultat = new Reel();
 		int i;
 		for (i = 0; i < this.formeDeveloppee.size(); i++) {
-			resultat = Operation.additionner(resultat, Operation.multiplier(this.formeDeveloppee.get(i), Operation.pow((MathObject)val, new Reel(i))));
+			resultat = Operation.additionner(resultat, Operation.multiplier(this.formeDeveloppee.get(i), new PuissanceN(x.calc(val), new Reel(i)).calc()));
+		}
+		return resultat;
+	}
+	
+	/**
+	 * Methode de calcul de la valeur du polynome
+	 * 
+	 * @param valeur x
+	 * @return float result
+	 */
+	public MathObject calc(MathObject val) {
+		MathObject resultat = new Reel();
+		int i;
+		for (i = 0; i < this.formeDeveloppee.size(); i++) {
+			resultat = Operation.additionner(resultat, Operation.multiplier(this.formeDeveloppee.get(i), new PuissanceN(val, new Reel(i)).calc()));
 		}
 		return resultat;
 	}

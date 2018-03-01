@@ -1,6 +1,8 @@
 package math.entities.mathobject;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Map;
+import java.util.AbstractMap.SimpleEntry;
 
 public class MathObject implements IMathObject{
 
@@ -38,7 +40,7 @@ public class MathObject implements IMathObject{
 	}
 
 	@Override
-	public MathObject calc(IMathObject val) {
+	public MathObject calc(SimpleEntry<Inconnue, IMathObject>... value) {
 		// TODO Auto-generated method stub
 		return this;
 	}

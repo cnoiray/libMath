@@ -1,5 +1,8 @@
 package math.entities.mathobject;
 
+import java.util.Map;
+import java.util.AbstractMap.SimpleEntry;
+
 public class Inconnue extends MathObject{
 	public String inconnue;
 	
@@ -17,8 +20,14 @@ public class Inconnue extends MathObject{
 	}
 	
 	@Override
-	public MathObject calc(IMathObject val) {
-		return (MathObject) val;
+	public MathObject calc(SimpleEntry<Inconnue, IMathObject>... value) {
+		for (SimpleEntry<Inconnue, IMathObject> item : value) {
+			if(inconnue.equals(item.getKey().inconnue)){
+				return (MathObject) item.getValue();
+			}
+		}
+		
+		return this;
 	}
 	
 	public MathObject deriver(){

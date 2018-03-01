@@ -1,13 +1,15 @@
 package math.main;
 
+import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.List;
+
+import math.entities.mathobject.Inconnue;
+import math.entities.mathobject.MathObject;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import math.entities.mathobject.MathObject;
 
 public class MainServiceTest {
 
@@ -82,8 +84,9 @@ public class MainServiceTest {
 
 	@Test
 	public void testCalculer() {
+		Inconnue inconnue = new Inconnue("x");
 		for (int i = 0; i < listeTestCalc.size(); i++) {
-			MathObject object = mainService.calculer(mainService.analyse(listeTestCalc.get(i)), mainService.analyse(listTestVal.get(i)));
+			MathObject object = mainService.calculer(mainService.analyse(listeTestCalc.get(i)), new SimpleEntry<>(inconnue ,mainService.analyse(listTestVal.get(i))));
 			Assert.assertEquals(listeCalcSol.get(i), object.toString());
 		}
 	}

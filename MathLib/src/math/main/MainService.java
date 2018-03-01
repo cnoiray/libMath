@@ -1,9 +1,15 @@
 package math.main;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.AbstractMap.SimpleEntry;
 
 import math.draw.Coordonnee;
+import math.entities.mathobject.Fonction;
+import math.entities.mathobject.IMathObject;
+import math.entities.mathobject.Inconnue;
 import math.entities.mathobject.MathObject;
 import math.entities.mathobject.Reel;
 import math.fonction.analyse.semantique.FonctionLexer;
@@ -26,15 +32,17 @@ public class MainService {
 		return tree.eval();
 	}
 	
-	public MathObject calculer(MathObject tree, MathObject val){
+	public MathObject calculer(MathObject tree, SimpleEntry<Inconnue, IMathObject>... val){
 		return tree.calc(val);
 	}
 	
-	public List<Coordonnee> draw(MathObject function, float begin, float end, float nbPoint){
+	public List<Coordonnee> draw(MathObject mathObject, float begin, float end, float nbPoint){
 		List<Coordonnee> retourList = new ArrayList<>();
 		float echelle = (end-begin)/nbPoint;
 		for(float i=begin;i<end;i=i+echelle){
-			MathObject retour = function.calc(new Reel(i));
+			Inconnue inconnue = new Inconnue("x");
+			
+			MathObject retour = mathObject.calc(new SimpleEntry<>(inconnue, new Reel(i)));
 			if(retour.getClass()==Reel.class){
 				retourList.add(new Coordonnee(i, ((Reel)retour).reel));
 			}else{
